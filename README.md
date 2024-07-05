@@ -1106,17 +1106,23 @@ SQL  SELECT
       c.nombre_cliente,
       e.nombre AS empleado,
       e.apellido1 AS empleado_apellido,
-      o.telefono,
-      SUM(p.total)
+      o.telefono
+
   FROM
       cliente c
   LEFT JOIN
       pago p ON p.codigo_cliente = c.codigo_cliente
-   JOIN
+   LEFT JOIN
    empleado e ON c.codigo_empleado_rep_ventas=e.codigo_empleado
-   JOIN
+   LEFT JOIN
    oficina o ON o.codigo_oficina=e.codigo_oficina
-    GROUP BY
-      c.codigo_cliente;
+     where
+     p.total IS NULL
+
++----------------+----------------+----------+-------------------+-------------+
+| codigo_cliente | nombre_cliente | empleado | empleado_apellido | telefono    |
++----------------+----------------+----------+-------------------+-------------+
+|       12320430 | Bob Esponja    | Jorge    | Jaimes            | 62626260652 |
++----------------+----------------+----------+-------------------+-------------+
   
 ```
